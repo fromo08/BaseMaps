@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+        .container { position:relative; padding:0 0 0 55px; }
+#sidebar {
+    position:absolute;
+    top:0; bottom:0; left:0;
+    width:50px;
+    background:#000;
+}
+
+#header { border:1px solid #000; width:100px; height:20px; 
+    margin:0 0 5px 0;
+}
+#content { border:1px solid #000; width:100px; height:50px;
+    margin:5px 0 5px 0;
+}
+#footer { border:1px solid #000; width:100px; height:20px;
+    margin:5px 0 0 0;
+}
+
+    </style>
+<body>
+    <div id="map"></div>
+</div>
+ <script>
+ 
+mapboxgl.accessToken = 'pk.eyJ1Ijoiam1jYnJvb20iLCJhIjoianRuR3B1NCJ9.cePohSx5Od4SJhMVjFuCQA';
+
+ // make a map objects
+ var map = new mapboxgl.Map({
+     container: 'map',
+     style: 'mapbox://styles/mapbox/light-v9',
+     doubleClickZoom: false,
+     zoom: 10,
+     center: [-83.09, 42.33],
+     // :triangular_ruler:
+     bearing: -1.25,
+     minZoom: 9,
+     maxBounds: [
+         [-83.611, 41.900],
+         [-82.511, 42.800]
+     ]
+ });
+
+
+ map.on('load',function(){
+
+map.addSource('Precincts', {
+         type:"geojson",
+         data: "./Precincts.geojson"
+     });
+
+     map.addLayer({
+         //We are adding an object by add.layer - the properties of that object are as follows: the id is "nabes_line"
+         "id": "PrecinctLine",
+         "type": "line",
+         "source": "Precincts",
+         "layout":{
+             "visibility": "visible",
+             "line-join": "round"
+         },
+         "paint": {
+             "line-color": "black",
+             "line-opacity": 0.9        
+         }
+     })
+
+
+     //Here is wher the second add.source and add.layer goes....The code for the next layer needs to be before the "});" that close the map.on load function. This means after all layers are loaded you should finish the map.on load statement with a "});"
+
+//      map.addSource('SCA', {
+//          type:"geojson",
+//          data: "./SCA.geojson"
+//      });
+
+//      map.addLayer({
+//          //We are adding an object by add.layer - the properties of that object are as follows: the id is "nabes_line"
+//          "id": "SCALine",
+//          "type": "line",
+//          "source": "SCA",
+//          "layout":{
+//              "visibility": "visible",
+//              "line-join": "round"
+//          },
+//          "paint": {
+//              "line-color": "yellow",
+//              "line-opacity": 0.9        
+//          }
+//      }),
+
+// map.addSource('DpdStations', {
+//          type:"geojson",
+//          data: "./DpdStations.geojson"
+//      });
+
+//      map.addLayer({
+//          //We are adding an object by add.layer - the properties of that object are as follows: the id is "nabes_line"
+//          "id": "DPD_Point",
+//          "type": "circle",
+//          "source": "DpdStations",
+//          // "layout":{
+//          //     "visibility": "visible",
+//          //     "line-join": "round"
+//          // },
+//          // "paint": {
+//          //     "line-color": "green",
+//          //     "line-opacity": 0.9        
+//          // }
+//      })
+
+
+ });
+
+ </script>
+
+
+</body>
+
+</html>
